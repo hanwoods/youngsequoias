@@ -1,0 +1,30 @@
+{% if post.header.teaser %}
+  {% capture teaser %}{{ post.header.teaser }}{% endcapture %}
+{% else %}
+  {% assign teaser = site.teaser %}
+{% endif %}
+
+{% if post.id %}
+  {% assign title = post.title | markdownify | remove: "<p>" | remove: "</p>" %}
+{% else %}
+  {% assign title = post.title %}
+{% endif %}
+
+<div class="article">
+  <a href="{{ post.url | absolute_url }}" rel="permalink">
+    <img src="{{post.header.image}}" style="margin-bottom:0;"></img>
+  </a>
+  <a href="{{ post.url | absolute_url }}" rel="permalink" style="text-decoration: none;">
+    <h2 class="textOverlay" itemprop="headline">
+      <span>{{ title }}</span>
+    </h2>
+  </a>
+  {% if post.read_time %}
+    <p class="page__meta" style="margin-top:0;  margin-bottom:0;"><i class="fa fa-clock-o" aria-hidden="true"></i> {% include read-time.html %}</p>
+  {% endif %}
+  {% if post.dateOfActivity %}
+    <p class="page__meta" style="margin-top:0;  margin-bottom:0;">{{ post.dateOfActivity }}</p>
+  {% endif %}
+  {% if post.excerpt %}<p itemprop="description" style="margin-top:0; margin-bottom:3px;">{{ post.excerpt | markdownify | strip_html | truncate: 300 }}</p>{% endif %}
+  {% if post.author %}<p class="author" style="margin-top:0;">By {{ post.author}}</p>{% endif %}
+</div>
